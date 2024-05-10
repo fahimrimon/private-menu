@@ -160,10 +160,10 @@ const Home = () => {
                     id="entrees1"
                     value="Jerk Chicken"
                     onChange={handleEntreesSelection}
-                    // disabled={
-                    //   selectedEntrees.length === 1 &&
-                    //   !selectedEntrees.includes("Jerk Chicken")
-                    // }
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Jerk Chicken")
+                    }
                   />
                   <label for="entrees1">Jerk Chicken</label>
                 </div>
@@ -173,10 +173,10 @@ const Home = () => {
                     id="entrees2"
                     value="Roasted Chicken w/ herbs"
                     onChange={handleEntreesSelection}
-                    // disabled={
-                    //   selectedEntrees.length === 1 &&
-                    //   !selectedEntrees.includes("Roasted Chicken w/ herbs")
-                    // }
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Roasted Chicken w/ herbs")
+                    }
                   />
                   <label for="entrees2">Roasted Chicken w/ herbs</label>
                 </div>
@@ -186,12 +186,12 @@ const Home = () => {
                     id="entrees3"
                     value="Asian pepper steak w/ red & yellow peppers & onions"
                     onChange={handleEntreesSelection}
-                    // disabled={
-                    //   selectedEntrees.length === 1 &&
-                    //   !selectedEntrees.includes(
-                    //     "Asian pepper steak w/ red & yellow peppers & onions"
-                    //   )
-                    // }
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes(
+                        "Asian pepper steak w/ red & yellow peppers & onions"
+                      )
+                    }
                   />
                   <label for="entrees3">
                     Asian pepper steak w/ red & yellow peppers & onions
