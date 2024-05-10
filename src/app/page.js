@@ -13,7 +13,7 @@ const Home = () => {
 
   const handleEntreesSelection = (e) => {
     const selectedEntree = e.target.value;
-    if (selectedEntrees.includes(selectedEntree)) {
+    if (selectedEntrees.includes(selectedEntree) ) {
       setSelectedEntrees(
         selectedEntrees.filter((side) => side !== selectedEntree)
       );
@@ -117,7 +117,7 @@ const Home = () => {
       >
         <div className="xs:w-[90%] sm:w-[90%] md:w-[60%] lg:w-[30%] py-12">
           <div>
-            <h2 className="text-[26px] text-[#9333ea] font-bold text-center">
+            <h2 className="text-[24px] text-[#9333ea] font-bold text-center">
               Please enjoy the self-serve appetizers
             </h2>
             <div className="w-full mt-6">
@@ -160,10 +160,10 @@ const Home = () => {
                     id="entrees1"
                     value="Jerk Chicken"
                     onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Jerk Chicken")
-                    }
+                    // disabled={
+                    //   selectedEntrees.length === 1 &&
+                    //   !selectedEntrees.includes("Jerk Chicken")
+                    // }
                   />
                   <label for="entrees1">Jerk Chicken</label>
                 </div>
@@ -173,10 +173,10 @@ const Home = () => {
                     id="entrees2"
                     value="Roasted Chicken w/ herbs"
                     onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Roasted Chicken w/ herbs")
-                    }
+                    // disabled={
+                    //   selectedEntrees.length === 1 &&
+                    //   !selectedEntrees.includes("Roasted Chicken w/ herbs")
+                    // }
                   />
                   <label for="entrees2">Roasted Chicken w/ herbs</label>
                 </div>
@@ -186,12 +186,12 @@ const Home = () => {
                     id="entrees3"
                     value="Asian pepper steak w/ red & yellow peppers & onions"
                     onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes(
-                        "Asian pepper steak w/ red & yellow peppers & onions"
-                      )
-                    }
+                    // disabled={
+                    //   selectedEntrees.length === 1 &&
+                    //   !selectedEntrees.includes(
+                    //     "Asian pepper steak w/ red & yellow peppers & onions"
+                    //   )
+                    // }
                   />
                   <label for="entrees3">
                     Asian pepper steak w/ red & yellow peppers & onions
@@ -298,7 +298,7 @@ const Home = () => {
                   />
                   <label for="sides4">Rice w/ red beans</label>
                 </div>
-                <div className="radio mt-3">
+                {/* <div className="radio mt-3">
                   <input
                     type="checkbox"
                     id="sides5"
@@ -311,7 +311,7 @@ const Home = () => {
                     }
                   />
                   <label for="sides5">Vegetables rice</label>
-                </div>
+                </div> */}
                 <div className="radio mt-3">
                   <input
                     type="checkbox"
