@@ -16,18 +16,33 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.radio {
+  margin-right: 1rem;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.radio input[type="checkbox"] {
+  display: none;
+}
+
+.radio label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.radio label:before {
+  content: "";
+  display: inline-block;
+  width: 1.3em !important;
+  height: 1.3em !important;
+  margin-right: 0.7em;
+  border-radius: 50%;
+  border: 2px solid #4b5563;
+}
+
+.radio input[type="checkbox"]:checked + label:before {
+  background-color: #9333ea;
 }

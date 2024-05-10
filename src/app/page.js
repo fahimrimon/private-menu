@@ -1,113 +1,375 @@
-import Image from "next/image";
+"use client";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Home() {
+const Home = () => {
+  const form = useRef();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [selectedSides, setSelectedSides] = useState([]);
+  const [selectedEntrees, setSelectedEntrees] = useState([]);
+
+  const handleEntreesSelection = (e) => {
+    const selectedEntree = e.target.value;
+    if (selectedEntrees.includes(selectedEntree)) {
+      setSelectedEntrees(
+        selectedEntrees.filter((side) => side !== selectedEntree)
+      );
+      e.target.checked = false;
+    } else if (selectedEntrees.length < 1) {
+      setSelectedEntrees([...selectedEntrees, selectedEntree]);
+    }
+  };
+
+  const handleSidesSelection = (e) => {
+    const selectedSide = e.target.value;
+    if (selectedSides.includes(selectedSide)) {
+      setSelectedSides(selectedSides.filter((side) => side !== selectedSide));
+      e.target.checked = false;
+    } else if (selectedSides.length < 2) {
+      setSelectedSides([...selectedSides, selectedSide]);
+    }
+  };
+
+  console.log(selectedSides);
+  console.log(selectedEntrees);
+
+  // name and phone handle
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+  };
+
+  // Send Email start
+  const sendEmail = () => {
+    // e.preventDefault();
+
+    const stringEntrees = selectedEntrees.join(", ");
+    const stringSides = selectedSides.join(", ");
+
+    var mailSend = {
+      full_name: name,
+      phone_number: phone,
+      entrees: stringEntrees,
+      sides: stringSides,
+      note: "hello",
+    };
+
+    if (name == "" || name == null) {
+      toast.error("Please enter your name.", {
+        position: "top-center",
+      });
+    } else if (phone == "" || phone == null) {
+      toast.error("Please enter phone number.", {
+        position: "top-center",
+      });
+    } else if (selectedEntrees.length == 0) {
+      toast.error("Please select one entrees.", {
+        position: "top-center",
+      });
+    } else if (selectedSides.length < 2) {
+      toast.error("Please select any two sides.", {
+        position: "top-center",
+      });
+    } else if (
+      selectedEntrees.length == 1 &&
+      selectedSides.length == 2 &&
+      !name == "" &&
+      !phone == ""
+    ) {
+      emailjs
+        .send(
+          "service_ojlgj5a",
+          "template_d2ojtuu",
+          mailSend,
+          "ADFRDlpEp_s23CdOG"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            toast.success("Thanks for your order !", {
+              position: "top-center",
+            });
+            // console.log(e.target);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+       
+      // e.target.reset();
+    }
+  };
+  // Send Email end
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      <div
+        className="min-h-screen relative bg-cover bg-center flex justify-center w-full"
+        style={{
+          backgroundImage:
+            'url("https://i.ibb.co/N7g004k/private-menu-bg-half-trans-1.png")',
+        }}
+      >
+        <div className="xs:w-[90%] sm:w-[90%] md:w-[60%] lg:w-[30%] py-12">
+          <div>
+            <h2 className="text-[26px] text-[#9333ea] font-bold text-center">
+              Please enjoy the self-serve appetizers
+            </h2>
+            <div className="w-full mt-6">
+              <label className="font-medium text-[16px] text-[#9333ea] uppercase">
+                FULL NAME *
+              </label>
+              <div class="w-full">
+                <input
+                  type="text"
+                  name="full_name"
+                  onChange={handleName}
+                  className="pl-4 pr-4 py-[8px] text-[16px] border text-black-800 placeholder-black-800 bg-white border-slate-300 rounded outline-none focus:outline-none w-[100%]"
+                  placeholder="Full name"
+                />
+              </div>
+            </div>
+            <div className="w-full mt-4">
+              <label className="font-medium text-[16px] text-[#9333ea] uppercase">
+                Phone Number *
+              </label>
+              <div class="w-full">
+                <input
+                  type="text"
+                  name="phone_number"
+                  onChange={handlePhone}
+                  className="pl-4 pr-4 text-[16px] py-[8px] border text-black-800 placeholder-black-800 bg-white border-slate-300 rounded outline-none focus:outline-none w-[100%]"
+                  placeholder="Phone number"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <h2 className="text-2xl text-[#9333ea] font-bold">
+                ENTREES (Please choose one)
+              </h2>
+              <div className="">
+                <div className="radio mt-4">
+                  <input
+                    type="checkbox"
+                    id="entrees1"
+                    value="Jerk Chicken"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Jerk Chicken")
+                    }
+                  />
+                  <label for="entrees1">Jerk Chicken</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="entrees2"
+                    value="Roasted Chicken w/ herbs"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Roasted Chicken w/ herbs")
+                    }
+                  />
+                  <label for="entrees2">Roasted Chicken w/ herbs</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="entrees3"
+                    value="Asian pepper steak w/ red & yellow peppers & onions"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes(
+                        "Asian pepper steak w/ red & yellow peppers & onions"
+                      )
+                    }
+                  />
+                  <label for="entrees3">
+                    Asian pepper steak w/ red & yellow peppers & onions
+                  </label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="entrees4"
+                    value="Salmon"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Salmon")
+                    }
+                  />
+                  <label for="entrees4">Salmon</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="entrees5"
+                    value="Sweet Chilli Chicken Wings"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Sweet Chilli Chicken Wings")
+                    }
+                  />
+                  <label for="entrees5">Sweet Chilli Chicken Wings</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="entrees6"
+                    value="Tassot Turkey"
+                    onChange={handleEntreesSelection}
+                    disabled={
+                      selectedEntrees.length === 1 &&
+                      !selectedEntrees.includes("Tassot Turkey")
+                    }
+                  />
+                  <label for="entrees6">Tassot Turkey</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <h2 className="text-2xl text-[#9333ea] font-bold">
+                SIDES (Please choose two)
+              </h2>
+              <div className="">
+                <div className="radio mt-4">
+                  <input
+                    type="checkbox"
+                    id="sides1"
+                    value="Jerk Chicken"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Jerk Chicken")
+                    }
+                  />
+                  <label className="" for="sides1">
+                    steam veggies
+                  </label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides2"
+                    value="Djondjon rice"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Djondjon rice")
+                    }
+                  />
+                  <label for="sides2">Djondjon rice</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides3"
+                    value="Seafood rice"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Seafood rice")
+                    }
+                  />
+                  <label for="sides3">Seafood rice</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides4"
+                    value="Rice w/ red beans"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Rice w/ red beans")
+                    }
+                  />
+                  <label for="sides4">Rice w/ red beans</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides5"
+                    name="options"
+                    value="Vegetables rice"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Vegetables rice")
+                    }
+                  />
+                  <label for="sides5">Vegetables rice</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides6"
+                    name="options"
+                    value="Mac & cheese"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Mac & cheese")
+                    }
+                  />
+                  <label for="sides6">Mac & cheese</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides7"
+                    name="options"
+                    value="Macaroni au gratin"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Macaroni au gratin")
+                    }
+                  />
+                  <label for="sides7">Macaroni au gratin</label>
+                </div>
+                <div className="radio mt-3">
+                  <input
+                    type="checkbox"
+                    id="sides8"
+                    name="options"
+                    value="Sweet potato roasted"
+                    onChange={handleSidesSelection}
+                    disabled={
+                      selectedSides.length === 2 &&
+                      !selectedSides.includes("Sweet potato roasted")
+                    }
+                  />
+                  <label for="sides8">Sweet potato roasted</label>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={sendEmail}
+                className="bg-white px-8 font-semibold py-2 text-lg rounded-full border border-[#09001f] hover:bg-[#09001f] text-[#09001f] hover:transition duration-300 hover:text-[white] font-sans mt-12"
+              >
+                Continue
+              </button>
+            </div>
+            <ToastContainer />
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default Home;
