@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Kolker+Brush&display=swap');
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,8 +18,16 @@
   }
 }
 
+.cus-font {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .radio {
   margin-right: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .radio input[type="checkbox"] {
@@ -31,16 +41,18 @@
   font-size: 20px;
   text-transform: uppercase;
   font-weight: bold;
+  /* white-space: nowrap; */
 }
 
 .radio label:before {
   content: "";
   display: inline-block;
-  width: 1.3em !important;
-  height: 1.3em !important;
+  width: 1.3em;
+  height: 1.3em;
   margin-right: 0.7em;
   border-radius: 50%;
   border: 2px solid #4b5563;
+  flex-shrink: 0;
 }
 
 .radio input[type="checkbox"]:checked + label:before {

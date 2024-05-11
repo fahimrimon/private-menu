@@ -1,111 +1,10 @@
 "use client";
-import React, { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
-import { ToastContainer, toast } from "react-toastify";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { FaAngleDoubleRight } from "react-icons/fa";
+import Link from "next/link";
 
 const Home = () => {
-  const form = useRef();
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [selectedSides, setSelectedSides] = useState([]);
-  const [selectedEntrees, setSelectedEntrees] = useState([]);
-
-  const handleEntreesSelection = (e) => {
-    const selectedEntree = e.target.value;
-    if (selectedEntrees.includes(selectedEntree) ) {
-      setSelectedEntrees(
-        selectedEntrees.filter((side) => side !== selectedEntree)
-      );
-      e.target.checked = false;
-    } else if (selectedEntrees.length < 1) {
-      setSelectedEntrees([...selectedEntrees, selectedEntree]);
-    }
-  };
-
-  const handleSidesSelection = (e) => {
-    const selectedSide = e.target.value;
-    if (selectedSides.includes(selectedSide)) {
-      setSelectedSides(selectedSides.filter((side) => side !== selectedSide));
-      e.target.checked = false;
-    } else if (selectedSides.length < 2) {
-      setSelectedSides([...selectedSides, selectedSide]);
-    }
-  };
-
-  console.log(selectedSides);
-  console.log(selectedEntrees);
-
-  // name and phone handle
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handlePhone = (e) => {
-    setPhone(e.target.value);
-  };
-
-  // Send Email start
-  const sendEmail = () => {
-    // e.preventDefault();
-
-    const stringEntrees = selectedEntrees.join(", ");
-    const stringSides = selectedSides.join(", ");
-
-    var mailSend = {
-      full_name: name,
-      phone_number: phone,
-      entrees: stringEntrees,
-      sides: stringSides,
-      note: "hello",
-    };
-
-    if (name == "" || name == null) {
-      toast.error("Please enter your name.", {
-        position: "top-center",
-      });
-    } else if (phone == "" || phone == null) {
-      toast.error("Please enter phone number.", {
-        position: "top-center",
-      });
-    } else if (selectedEntrees.length == 0) {
-      toast.error("Please select one entrees.", {
-        position: "top-center",
-      });
-    } else if (selectedSides.length < 2) {
-      toast.error("Please select any two sides.", {
-        position: "top-center",
-      });
-    } else if (
-      selectedEntrees.length == 1 &&
-      selectedSides.length == 2 &&
-      !name == "" &&
-      !phone == ""
-    ) {
-      emailjs
-        .send(
-          "service_ojlgj5a",
-          "template_d2ojtuu",
-          mailSend,
-          "ADFRDlpEp_s23CdOG"
-        )
-        .then(
-          (result) => {
-            console.log(result.text);
-            toast.success("Thanks for your order !", {
-              position: "top-center",
-            });
-            // console.log(e.target);
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        );
-       
-      // e.target.reset();
-    }
-  };
-  // Send Email end
-
   return (
     <div>
       <div
@@ -115,256 +14,44 @@ const Home = () => {
             'url("https://i.ibb.co/N7g004k/private-menu-bg-half-trans-1.png")',
         }}
       >
-        <div className="xs:w-[90%] sm:w-[90%] md:w-[60%] lg:w-[30%] py-12">
+        <div className="xs:w-[90%] sm:w-[90%] md:w-[50%] lg:w-[50%] py-12">
           <div>
-            <h2 className="text-[24px] text-[#9333ea] font-bold text-center">
-              Please enjoy the self-serve appetizers
-            </h2>
-            <div className="w-full mt-6">
-              <label className="font-medium text-[16px] text-[#9333ea] uppercase">
-                FULL NAME *
-              </label>
-              <div class="w-full">
-                <input
-                  type="text"
-                  name="full_name"
-                  onChange={handleName}
-                  className="pl-4 pr-4 py-[8px] text-[16px] border text-black-800 placeholder-black-800 bg-white border-slate-300 rounded outline-none focus:outline-none w-[100%]"
-                  placeholder="Full name"
-                />
-              </div>
-            </div>
-            <div className="w-full mt-4">
-              <label className="font-medium text-[16px] text-[#9333ea] uppercase">
-                Phone Number *
-              </label>
-              <div class="w-full">
-                <input
-                  type="text"
-                  name="phone_number"
-                  onChange={handlePhone}
-                  className="pl-4 pr-4 text-[16px] py-[8px] border text-black-800 placeholder-black-800 bg-white border-slate-300 rounded outline-none focus:outline-none w-[100%]"
-                  placeholder="Phone number"
-                />
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h2 className="text-2xl text-[#9333ea] font-bold">
-                ENTREES (Please choose one)
+            <div>
+              <h2 className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] font-bold text-center">
+                Welcome to Emalie&apos;s First Communion
               </h2>
-              <div className="">
-                <div className="radio mt-4">
-                  <input
-                    type="checkbox"
-                    id="entrees1"
-                    value="Jerk Chicken"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Jerk Chicken")
-                    }
-                  />
-                  <label for="entrees1">Jerk Chicken</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="entrees2"
-                    value="Roasted Chicken w/ herbs"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Roasted Chicken w/ herbs")
-                    }
-                  />
-                  <label for="entrees2">Roasted Chicken w/ herbs</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="entrees3"
-                    value="Asian pepper steak w/ red & yellow peppers & onions"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes(
-                        "Asian pepper steak w/ red & yellow peppers & onions"
-                      )
-                    }
-                  />
-                  <label for="entrees3">
-                    Asian pepper steak w/ red & yellow peppers & onions
-                  </label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="entrees4"
-                    value="Salmon"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Salmon")
-                    }
-                  />
-                  <label for="entrees4">Salmon</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="entrees5"
-                    value="Sweet Chilli Chicken Wings"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Sweet Chilli Chicken Wings")
-                    }
-                  />
-                  <label for="entrees5">Sweet Chilli Chicken Wings</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="entrees6"
-                    value="Tassot Turkey"
-                    onChange={handleEntreesSelection}
-                    disabled={
-                      selectedEntrees.length === 1 &&
-                      !selectedEntrees.includes("Tassot Turkey")
-                    }
-                  />
-                  <label for="entrees6">Tassot Turkey</label>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h2 className="text-2xl text-[#9333ea] font-bold">
-                SIDES (Please choose two)
+              <h2 className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] font-bold text-center">
+                May 25th, 2024
               </h2>
-              <div className="">
-                <div className="radio mt-4">
-                  <input
-                    type="checkbox"
-                    id="sides1"
-                    value="Jerk Chicken"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Jerk Chicken")
-                    }
-                  />
-                  <label className="" for="sides1">
-                    steam veggies
-                  </label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides2"
-                    value="Djondjon rice"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Djondjon rice")
-                    }
-                  />
-                  <label for="sides2">Djondjon rice</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides3"
-                    value="Seafood rice"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Seafood rice")
-                    }
-                  />
-                  <label for="sides3">Seafood rice</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides4"
-                    value="Rice w/ red beans"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Rice w/ red beans")
-                    }
-                  />
-                  <label for="sides4">Rice w/ red beans</label>
-                </div>
-                {/* <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides5"
-                    name="options"
-                    value="Vegetables rice"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Vegetables rice")
-                    }
-                  />
-                  <label for="sides5">Vegetables rice</label>
-                </div> */}
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides6"
-                    name="options"
-                    value="Mac & cheese"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Mac & cheese")
-                    }
-                  />
-                  <label for="sides6">Mac & cheese</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides7"
-                    name="options"
-                    value="Macaroni au gratin"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Macaroni au gratin")
-                    }
-                  />
-                  <label for="sides7">Macaroni au gratin</label>
-                </div>
-                <div className="radio mt-3">
-                  <input
-                    type="checkbox"
-                    id="sides8"
-                    name="options"
-                    value="Sweet potato roasted"
-                    onChange={handleSidesSelection}
-                    disabled={
-                      selectedSides.length === 2 &&
-                      !selectedSides.includes("Sweet potato roasted")
-                    }
-                  />
-                  <label for="sides8">Sweet potato roasted</label>
-                </div>
-              </div>
+            </div>
+            <div className="mt-8 mb-6">
+              <p className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f]">
+                Dear friends and family,
+              </p>
+            </div>
+            <div>
+              <p className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] text-justify">
+              It brings us great joy to gather together today to celebrate another special milestone in our daughter&apos;s spiritual journey – her first communion. We are grateful to have you all here to join us in this special moment.
+              </p>
+              <p className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] text-justify mt-6">
+              For us, this is a time to reflect on the growth and maturity of our daughter, both in her faith and as an individual. We are proud of the dedication she has shown in preparing for this important sacrament and we know that she will continue to grow in her relationship with God.
+              </p>
+              <p className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] text-justify mt-6">
+              We also want to take a moment to thank our family and friends who have been a source of love, support, and guidance for our daughter. Your encouragement and prayers have played a significant role in her spiritual development.
+              </p>
+              <p className="md:text-[24px] lg:text-[24px] text-[20px] cus-font text-[#09001f] text-justify mt-6">
+              As we come together to celebrate, let us remember the significance of this.
+              </p>
             </div>
             <div className="flex justify-end">
+              <Link href="/private-menu">
               <button
-                onClick={sendEmail}
-                className="bg-white px-8 font-semibold py-2 text-lg rounded-full border border-[#09001f] hover:bg-[#09001f] text-[#09001f] hover:transition duration-300 hover:text-[white] font-sans mt-12"
+                className="px-8 font-semibold py-2 text-lg rounded-full border border-[#09001f] hover:bg-[#09001f] hover:transition duration-300 text-red-500 hover:text-[white] font-sans mt-12 flex items-center"
               >
-                Continue
-              </button>
+                Please click here for the meal selection menu
+                <p><FaAngleDoubleRight className="ml-2 mt-1" /></p>
+              </button></Link>
             </div>
-            <ToastContainer />
           </div>
         </div>
       </div>
