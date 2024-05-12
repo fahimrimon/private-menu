@@ -64,23 +64,25 @@ const PrivateMenu = () => {
       toast.error("Please enter your name.", {
         position: "top-center",
       });
-    } else if (phone == "" || phone == null) {
-      toast.error("Please enter phone number.", {
-        position: "top-center",
-      });
-    } else if (selectedEntrees.length < 2) {
+    } 
+    // else if (phone == "" || phone == null) {
+    //   toast.error("Please enter phone number.", {
+    //     position: "top-center",
+    //   });
+    // } 
+    else if (selectedEntrees.length < 2) {
       toast.error("Please select any two entrees.", {
         position: "top-center",
       });
-    } else if (selectedSides.length < 2) {
-      toast.error("Please select any two sides.", {
+    } else if (selectedSides.length < 1) {
+      toast.error("Please select minimum one side.", {
         position: "top-center",
       });
     } else if (
       selectedEntrees.length == 2 &&
-      selectedSides.length == 2 &&
-      !name == "" &&
-      !phone == ""
+      selectedSides.length <= 2 &&
+      !name == "" 
+      // && !phone == ""
     ) {
       emailjs
         .send(
@@ -137,7 +139,7 @@ const PrivateMenu = () => {
             </div>
             <div className="w-full mt-4">
               <label className="font-bold text-[16px] text-[#9333ea] uppercase">
-                Phone Number *
+                Phone Number
               </label>
               <div class="w-full">
                 <input
@@ -242,7 +244,7 @@ const PrivateMenu = () => {
 
             <div className="mt-6">
               <h2 className="text-2xl text-[#9333ea] font-bold">
-                SIDES (Please choose two)
+                SIDES (Please choose up to two)
               </h2>
               <div className="">
                 <div className="radio mt-4">
