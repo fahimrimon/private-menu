@@ -154,7 +154,7 @@ const PrivateMenu = () => {
 
             <div className="mt-6">
               <h2 className="text-2xl text-[#9333ea] font-bold">
-                ENTREES (Please choose two)
+                ENTREES (Please choose up to two)
               </h2>
               <div className="">
                 <div className="radio mt-4">
