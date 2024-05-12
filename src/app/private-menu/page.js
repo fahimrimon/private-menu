@@ -14,7 +14,7 @@ const PrivateMenu = () => {
 
   const handleEntreesSelection = (e) => {
     const selectedEntree = e.target.value;
-    if (selectedEntrees.includes(selectedEntree) ) {
+    if (selectedEntrees.includes(selectedEntree)) {
       setSelectedEntrees(
         selectedEntrees.filter((side) => side !== selectedEntree)
       );
@@ -64,14 +64,14 @@ const PrivateMenu = () => {
       toast.error("Please enter your name.", {
         position: "top-center",
       });
-    } 
+    }
     // else if (phone == "" || phone == null) {
     //   toast.error("Please enter phone number.", {
     //     position: "top-center",
     //   });
-    // } 
-    else if (selectedEntrees.length < 2) {
-      toast.error("Please select any two entrees.", {
+    // }
+    else if (selectedEntrees.length < 1) {
+      toast.error("Please select minimum one entrees.", {
         position: "top-center",
       });
     } else if (selectedSides.length < 1) {
@@ -79,9 +79,9 @@ const PrivateMenu = () => {
         position: "top-center",
       });
     } else if (
-      selectedEntrees.length == 2 &&
+      selectedEntrees.length <= 2 &&
       selectedSides.length <= 2 &&
-      !name == "" 
+      !name == ""
       // && !phone == ""
     ) {
       emailjs
@@ -103,7 +103,7 @@ const PrivateMenu = () => {
             console.log(error.text);
           }
         );
-       
+
       // e.target.reset();
     }
   };
@@ -259,7 +259,7 @@ const PrivateMenu = () => {
                     }
                   />
                   <label className="" for="sides1">
-                  Steamed veggies
+                    Steamed veggies
                   </label>
                 </div>
                 <div className="radio mt-3">
@@ -365,7 +365,9 @@ const PrivateMenu = () => {
                 className="px-8 font-semibold py-2 text-lg rounded-full border border-[#09001f] hover:bg-[#09001f] hover:transition duration-300 text-red-500 hover:text-[white] font-sans mt-12 flex items-center"
               >
                 Continue
-                <p><FaAngleDoubleRight className="ml-2 mt-1" /></p>
+                <p>
+                  <FaAngleDoubleRight className="ml-2 mt-1" />
+                </p>
               </button>
             </div>
             <ToastContainer />
