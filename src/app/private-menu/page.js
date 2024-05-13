@@ -70,12 +70,17 @@ const PrivateMenu = () => {
     //     position: "top-center",
     //   });
     // }
-    else if (selectedEntrees.length < 1) {
-      toast.error("Please select minimum one entrees.", {
-        position: "top-center",
-      });
-    } else if (selectedSides.length < 1) {
-      toast.error("Please select minimum one side.", {
+    // else if (selectedEntrees.length < 1) {
+    //   toast.error("Please select minimum one entrees.", {
+    //     position: "top-center",
+    //   });
+    // } else if (selectedSides.length < 1) {
+    //   toast.error("Please select minimum one side.", {
+    //     position: "top-center",
+    //   });
+    // }
+    else if (selectedEntrees.length + selectedSides.length < 1) {
+      toast.error("Choose any one from entrees or sides.", {
         position: "top-center",
       });
     } else if (
