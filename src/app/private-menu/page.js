@@ -218,7 +218,7 @@ const PrivateMenu = () => {
                   />
                   <label for="entrees4">Salmon</label>
                 </div>
-                <div className="radio mt-3">
+                {/* <div className="radio mt-3">
                   <input
                     type="checkbox"
                     id="entrees5"
@@ -230,7 +230,7 @@ const PrivateMenu = () => {
                     }
                   />
                   <label for="entrees5">Sweet Chilli Chicken Wings</label>
-                </div>
+                </div> */}
                 <div className="radio mt-3">
                   <input
                     type="checkbox"
