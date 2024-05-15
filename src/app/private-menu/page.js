@@ -91,10 +91,10 @@ const PrivateMenu = () => {
     ) {
       emailjs
         .send(
-          "service_ojlgj5a",
-          "template_d2ojtuu",
+          "service_fzstw49",
+          "template_1mult5w",
           mailSend,
-          "ADFRDlpEp_s23CdOG"
+          "fGwMNB9Pe9yCuE3Jg"
         )
         .then(
           (result) => {
